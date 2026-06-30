@@ -264,7 +264,8 @@ export function mount(renderer: AnyRenderer) {
   function setFooter(mode: Mode) {
     if (mode === "home") {
       footerLeft.content = t`${k("p")} ${l("projects")}${gap}${k("s")} ${l("site")}${gap}${k("g")} ${l("github")}${gap}${k("x")} ${l("x.com")}${gap}${k("q")} ${l("quit")}`;
-      footerRight.content = S(fg(C.faint)("a terminal business card"));
+      // footerRight.content = S(fg(C.faint)("a terminal business card"));
+      footerRight.content = " ";
     } else {
       footerLeft.content = t`${k("enter")} ${l("open")}${gap}${k("g")} ${l("github")}${gap}${k("s")} ${l("site")}${gap}${k("x")} ${l("x.com")}${gap}${k("p")}${l("/")}${k("esc")} ${l("home")}${gap}${k("q")} ${l("quit")}`;
       footerRight.content = S(fg(C.faint)("↑↓ / j k  move"));
