@@ -1,0 +1,22 @@
+{
+  "name": "pranav-term",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "pranav": "index.ts"
+  },
+  "scripts": {
+    "start": "bun run index.ts",
+    "snapshot": "bun run snapshot.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@opentui/core": "^0.4.2"
+  }
+}
