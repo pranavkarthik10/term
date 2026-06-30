@@ -81,10 +81,14 @@ export function mount(renderer: AnyRenderer) {
     justifyContent: "center",
   });
 
+  // portrait shrinks (and clips from the bottom) before the identity block,
+  // so the card never pushes the name/links/footer off small terminals.
   const portraitBox = new BoxRenderable(renderer, {
     id: "portrait",
     flexDirection: "column",
     alignItems: "flex-start",
+    flexShrink: 0,
+    overflow: "hidden",
   });
   home.add(portraitBox);
   const portraitRows: TextRenderable[] = [];
@@ -97,7 +101,14 @@ export function mount(renderer: AnyRenderer) {
     portraitRows.push(row);
   }
 
-  home.add(
+  const identity = new BoxRenderable(renderer, {
+    id: "identity",
+    flexDirection: "column",
+    alignItems: "center",
+    flexShrink: 0,
+  });
+  home.add(identity);
+  identity.add(
     new ASCIIFontRenderable(renderer, {
       id: "homeLogo",
       text: "pranav",
@@ -106,24 +117,24 @@ export function mount(renderer: AnyRenderer) {
       marginTop: 2,
     }),
   );
-  home.add(
+  identity.add(
     new TextRenderable(renderer, {
       id: "homeName",
       marginTop: 2,
       content: t`${bold(fg(C.fg)(PROFILE.name))}`,
     }),
   );
-  home.add(
+  identity.add(
     new TextRenderable(renderer, {
       id: "homeRole",
       marginTop: 1,
       content: t`${fg(C.accent)(EXPERIENCE[0].role)}  ${fg(C.faint)("·")}  ${fg(C.soft)(EXPERIENCE[0].company)}`,
     }),
   );
-  home.add(
+  identity.add(
     new TextRenderable(renderer, {
       id: "homeLinks",
-      marginTop: 3,
+      marginTop: 2,
       content: t`${fg(C.soft)(PROFILE.site)}     ${fg(C.dim)(PROFILE.github)}     ${fg(C.dim)(PROFILE.x)}`,
     }),
   );
@@ -296,6 +307,19 @@ export function mount(renderer: AnyRenderer) {
     renderer.requestRender();
   }, 70);
   if (typeof (timer as any).unref === "function") (timer as any).unref();
+
+  // keep the cap + face: drop portrait rows from the bottom when the terminal
+  // is too short to fit the whole card.
+  function layoutPortrait() {
+    const reserved = 18; // identity block + footer + paddings
+    const budget = Math.max(3, Math.min(PORTRAIT_ROWS, renderer.terminalHeight - reserved));
+    for (let i = 0; i < PORTRAIT_ROWS; i++) portraitRows[i].visible = i < budget;
+  }
+  layoutPortrait();
+  (renderer as any).on("resize", () => {
+    layoutPortrait();
+    renderer.requestRender();
+  });
 
   // ── mode switching ────────────────────────────────────────────────────────
   let mode: Mode = "home";

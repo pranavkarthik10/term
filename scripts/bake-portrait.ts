@@ -37,7 +37,7 @@ minY = Math.max(0, minY - pad);
 maxX = Math.min(iw - 1, maxX + pad);
 maxY = Math.min(ih - 1, maxY + pad);
 img.crop({ x: minX, y: minY, w: maxX - minX + 1, h: maxY - minY + 1 });
-img.contrast(0.12);
+img.contrast(0.24);
 
 const w = img.bitmap.width;
 const h = img.bitmap.height;
