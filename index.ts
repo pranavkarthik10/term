@@ -117,20 +117,21 @@ export function mount(renderer: AnyRenderer) {
       marginTop: 2,
     }),
   );
-  identity.add(
-    new TextRenderable(renderer, {
-      id: "homeName",
-      marginTop: 2,
-      content: t`${bold(fg(C.fg)(PROFILE.name))}`,
-    }),
-  );
-  identity.add(
-    new TextRenderable(renderer, {
-      id: "homeRole",
-      marginTop: 1,
-      content: t`${fg(C.accent)(EXPERIENCE[0].role)}  ${fg(C.faint)("·")}  ${fg(C.soft)(EXPERIENCE[0].company)}`,
-    }),
-  );
+  // Name + title intentionally hidden on the Home card (the logo carries it).
+  // identity.add(
+  //   new TextRenderable(renderer, {
+  //     id: "homeName",
+  //     marginTop: 2,
+  //     content: t`${bold(fg(C.fg)(PROFILE.name))}`,
+  //   }),
+  // );
+  // identity.add(
+  //   new TextRenderable(renderer, {
+  //     id: "homeRole",
+  //     marginTop: 1,
+  //     content: t`${fg(C.accent)(EXPERIENCE[0].role)}  ${fg(C.faint)("·")}  ${fg(C.soft)(EXPERIENCE[0].company)}`,
+  //   }),
+  // );
   identity.add(
     new TextRenderable(renderer, {
       id: "homeLinks",
@@ -311,7 +312,7 @@ export function mount(renderer: AnyRenderer) {
   // keep the cap + face: drop portrait rows from the bottom when the terminal
   // is too short to fit the whole card.
   function layoutPortrait() {
-    const reserved = 18; // identity block + footer + paddings
+    const reserved = 13; // logo + links + footer + paddings
     const budget = Math.max(3, Math.min(PORTRAIT_ROWS, renderer.terminalHeight - reserved));
     for (let i = 0; i < PORTRAIT_ROWS; i++) portraitRows[i].visible = i < budget;
   }
