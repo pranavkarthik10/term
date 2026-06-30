@@ -124,6 +124,7 @@ export const SHIPS: Ship[] = [
 ];
 
 export const EXPERIENCE = [
+  { company: "SOCIUS Lab", role: "Research Scientist", when: "2026 – Present", where: "Vancouver, BC" },
   { company: "Vercel", role: "Software Engineering Intern", when: "Sep–Dec 2025", where: "San Francisco, CA" },
   { company: "Google", role: "Software Engineering Intern", when: "May–Aug 2025", where: "Seattle, WA" },
   { company: "Google", role: "STEP Intern", when: "May–Aug 2024", where: "Waterloo, ON" },
