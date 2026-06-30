@@ -14,24 +14,24 @@ import { spawn } from "node:child_process";
 import { PROFILE, SHIPS, EXPERIENCE, EDUCATION, type Ship } from "./data";
 import { PORTRAIT_FRAMES, PORTRAIT_ROWS } from "./ascii-art";
 
-// ── palette ──────────────────────────────────────────────────────────────
+// ── palette ── warm amber-phosphor CRT ────────────────────────────────────
 const C = {
   bg: "#0a0a0a",
-  fg: "#e8e8e8",
-  soft: "#a1a1aa",
-  dim: "#6b7280",
-  faint: "#4b5563",
-  accent: "#38bdf8", // cyan
-  gold: "#fbbf24",
-  selBg: "#f4f4f5",
+  fg: "#f0e6d2",
+  soft: "#c8b894",
+  dim: "#8a7d5f",
+  faint: "#5a5240",
+  accent: "#ffb000", // amber
+  gold: "#ffd166",
+  selBg: "#ffb000",
   selFg: "#0a0a0a",
-  selDim: "#3f3f46",
-  rule: "#27272a",
+  selDim: "#5a3d0a",
+  rule: "#2a2418",
 } as const;
 
 // scan-beam gradient over the portrait (index 0 = on the beam)
-const BEAM = ["#e0f2fe", "#bae6fd", "#7dd3fc", "#56b4e0", "#3f5c6b", "#39424d", "#2f363f"];
-const PORTRAIT_BASE = "#3a424d";
+const BEAM = ["#fff0d0", "#ffd591", "#ffb000", "#cc8a1a", "#946614", "#62450f", "#40300c"];
+const PORTRAIT_BASE = "#8a6a2e";
 
 // wrap a single styled chunk into a StyledText for `content` assignment
 const S = (chunk: TextChunk) => t`${chunk}`;
@@ -103,33 +103,28 @@ export function mount(renderer: AnyRenderer) {
       text: "pranav",
       font: "tiny",
       color: C.fg,
-      marginTop: 1,
+      marginTop: 2,
     }),
   );
   home.add(
     new TextRenderable(renderer, {
       id: "homeName",
-      marginTop: 1,
+      marginTop: 2,
       content: t`${bold(fg(C.fg)(PROFILE.name))}`,
     }),
   );
   home.add(
     new TextRenderable(renderer, {
       id: "homeRole",
-      content: t`${fg(C.accent)(EXPERIENCE[0].role)} ${fg(C.faint)("@")} ${fg(C.soft)(EXPERIENCE[0].company)}`,
-    }),
-  );
-  home.add(
-    new TextRenderable(renderer, {
-      id: "homeTag",
-      content: S(fg(C.dim)(PROFILE.tagline)),
+      marginTop: 1,
+      content: t`${fg(C.accent)(EXPERIENCE[0].role)}  ${fg(C.faint)("·")}  ${fg(C.soft)(EXPERIENCE[0].company)}`,
     }),
   );
   home.add(
     new TextRenderable(renderer, {
       id: "homeLinks",
-      marginTop: 1,
-      content: t`${fg(C.soft)(PROFILE.site)}    ${fg(C.dim)(PROFILE.github)}    ${fg(C.dim)(PROFILE.x)}`,
+      marginTop: 3,
+      content: t`${fg(C.soft)(PROFILE.site)}     ${fg(C.dim)(PROFILE.github)}     ${fg(C.dim)(PROFILE.x)}`,
     }),
   );
 

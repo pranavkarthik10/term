@@ -13,8 +13,9 @@ bunx pranavkarthik
 
 ## Modes
 
-**Home** — a minimal card: an animated ASCII portrait (baked from a photo, with a
-sweeping scan-beam effect), name, current role, tagline, and links.
+**Home** — a minimal card: an animated ASCII portrait (the person cut out of a
+photo via macOS Vision, baked to ASCII, with a sweeping amber scan-beam), name,
+current role, and links.
 
 **Projects** — press `p`. A keyboard-driven list of recent ships on the left with a
 live detail panel on the right (year, type, description, stack, awards, `NOW`/`EDU`).
@@ -47,7 +48,15 @@ bun install
 bun start                       # run locally
 bun run snapshot.ts 100 40      # plain-text frame of Home
 bun run snapshot.ts 100 36 ships# plain-text frame of Projects
-bun run scripts/bake-portrait.ts <image>   # re-bake ascii-art.ts from a photo
+```
+
+Re-bake the portrait from a new photo (macOS — uses the Vision framework to cut
+out the person, then converts the cutout to ASCII):
+
+```bash
+swiftc -O scripts/segment.swift -o /tmp/segment
+/tmp/segment path/to/photo.jpg /tmp/cutout.png
+bun run scripts/bake-portrait.ts /tmp/cutout.png   # writes ascii-art.ts
 ```
 
 ## Files
